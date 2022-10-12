@@ -59,8 +59,7 @@ public final class InstructionManager {
 
             // HACK:
             //   Need to fix overlay's frame here.
-            //   I coundn't support device rotation with frame layout,
-            //   so sticking with AutoLayout here.
+            //   I coundn't support device rotation with frame layout, so sticking with AutoLayout.
             //   Looks like expensive code though.
             w.layoutIfNeeded()
 

@@ -9,7 +9,6 @@ final class OverlayView: UIView {
     }
 
     var onWidthChanged: (() -> ())?
-
     var onHitInsideCutoutPath: (() -> ())?
     private var preWidth: CGFloat?
 
