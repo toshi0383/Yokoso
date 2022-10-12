@@ -44,7 +44,7 @@ final class OverlayView: UIView {
     private func reloadLayers() {
         guard let cutoutPath else { return }
 
-        let path = UIBezierPath(rect: cutoutPath)
+        let path = UIBezierPath(roundedRect: cutoutPath, cornerRadius: 5)
         path.append(UIBezierPath(rect: bounds))
 
         let maskLayer = CAShapeLayer()
