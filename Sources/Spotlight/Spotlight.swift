@@ -9,20 +9,20 @@ public final class InstructionManager {
 
         public enum InteractionStyle {
 
-            /// メッセージを表示する
-            /// cutoutPath内をタップさせる
-            /// 自分がタップされても閉じない
+            /// - Shows message
+            /// - Only tappable inside cutoutPath
+            /// - Does not close by itself
             case blocksTapBesidesCutoutPath
 
-            /// メッセージを表示する
-            /// 次へボタンを表示する
-            /// どこを押しても閉じる
-            /// cutoutPath内だけはタップ有効で、この場合も閉じる
+            /// - Shows message
+            /// - Shows NextButton
+            /// - Tap anywhere to close
+            /// - "Tap through" inside cutoutPath while closing
             case nextButton
 
-            /// メッセージを表示する
-            /// どこを押しても閉じる
-            /// cutoutPath内だけはタップ有効で、この場合も閉じる
+            /// - Shows message
+            /// - Tap anywhere to close
+            /// - "Tap through" inside cutoutPath while closing
             case messageOnly
         }
 
