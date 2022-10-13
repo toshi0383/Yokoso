@@ -76,34 +76,43 @@ final class ChildViewController: UIViewController {
     private func startI1() {
         isShowingInstruction = true
 
-        manager.show(
-            .init(
-                style: .messageOnly,
-                message: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."),
-                sourceView: label1
-            ),
-            in: view
-        ) { [weak self] in
-            guard let me = self else { return }
+        do {
+            try manager.show(
+                .init(
+                    style: .messageOnly,
+                    message: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."),
+                    sourceView: label1
+                ),
+                in: view
+            ) { [weak self] in
+                guard let me = self else { return }
 
-            me.startI2()
+                me.startI2()
+            }
+
+        } catch {
+            assertionFailure("\(error)")
         }
     }
 
     private func startI2() {
         isShowingInstruction = true
 
-        manager.show(
-            .init(
-                style: .blocksTapBesidesCutoutPath,
-                message: NSAttributedString(string: "You have to tap here to continue. Tap again to restart these instructions."),
-                sourceView: label2
-            ),
-            in: view
-        ) { [weak self] in
-            guard let me = self else { return }
+        do {
+            try manager.show(
+                .init(
+                    style: .blocksTapBesidesCutoutPath,
+                    message: NSAttributedString(string: "You have to tap here to continue. Tap again to restart these instructions."),
+                    sourceView: label2
+                ),
+                in: view
+            ) { [weak self] in
+                guard let me = self else { return }
 
-            me.isShowingInstruction = false
+                me.isShowingInstruction = false
+            }
+        } catch {
+            assertionFailure("\(error)")
         }
     }
 

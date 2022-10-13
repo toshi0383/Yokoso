@@ -27,6 +27,7 @@
 		8A51EA5428F6DD0D00970A37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A51EA5328F6DD0D00970A37 /* Assets.xcassets */; };
 		8A51EA5728F6DD0D00970A37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A51EA5528F6DD0D00970A37 /* LaunchScreen.storyboard */; };
 		8A51EA5D28F6DE9100970A37 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA5C28F6DE9100970A37 /* OverlayView.swift */; };
+		8A51EA6128F82B2200970A37 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6028F82B2200970A37 /* Error.swift */; };
 		OBJ_21 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Spotlight.swift */; };
 		OBJ_28 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		8A51EA5628F6DD0D00970A37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A51EA5828F6DD0D00970A37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A51EA5C28F6DE9100970A37 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		8A51EA6028F82B2200970A37 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
 		"spotlight::Spotlight::Product" /* Spotlight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Spotlight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* Spotlight.swift */,
+				8A51EA6028F82B2200970A37 /* Error.swift */,
 				8A51EA5C28F6DE9100970A37 /* OverlayView.swift */,
 			);
 			name = Spotlight;
@@ -243,6 +246,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_21 /* Spotlight.swift in Sources */,
+				8A51EA6128F82B2200970A37 /* Error.swift in Sources */,
 				8A51EA5D28F6DE9100970A37 /* OverlayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

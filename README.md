@@ -6,3 +6,4 @@ Simple spotlight instruction framework for UIKit iOS.
 
 - [x] Supports device rotation / iPad SplitView
 - [x] Simple interfaces
+- [x] Checks if interested view is inside window's bounds

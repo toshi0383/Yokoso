@@ -72,24 +72,29 @@ public final class InstructionManager {
 
     public init() {}
 
+    /// - throws: `SpotlightError.interestedViewOutOfBounds`
     public func show(
         _ instruction: Instruction,
         in view: UIView,
         onFinish: @escaping () -> ()
-    ) {
+    ) throws {
         window = view.window
         self.onFinish = onFinish
 
-        _show(instruction)
+        try _show(instruction)
     }
 
-    private func _show(_ instruction: Instruction) {
+    private func _show(_ instruction: Instruction) throws {
         overlay = OverlayView()
 
         guard let window, let overlay else { return }
 
         guard let sourceViewFrameInWindow = instruction.sourceView.superview?.convert(instruction.sourceView.frame, to: window) else {
             return
+        }
+
+        if sourceViewFrameInWindow.minX < 0 || sourceViewFrameInWindow.minY < 0 {
+            throw SpotlightError.interestedViewOutOfBounds
         }
 
         let expanded = CGRect(
@@ -112,7 +117,7 @@ public final class InstructionManager {
             // - NOTE: Supporting device rotation / iPad SplitView
             // - HACK: Layout is not fixed in original window at this time, so check interested frame after some delay.
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) { [weak self] in
-                self?._show(instruction)
+                try? self?._show(instruction)
             }
 
         }
