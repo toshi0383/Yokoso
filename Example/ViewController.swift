@@ -67,8 +67,8 @@ final class ChildViewController: UIViewController {
         view.addSubview(vStack)
 
         NSLayoutConstraint.activate([
-            vStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            vStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            vStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
         ])
     }
 
@@ -80,7 +80,7 @@ final class ChildViewController: UIViewController {
             try manager.show(
                 .init(
                     style: .messageOnly,
-                    message: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."),
+                    message: .init(attributedString: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .white),
                     sourceView: label1
                 ),
                 in: view
@@ -102,7 +102,7 @@ final class ChildViewController: UIViewController {
             try manager.show(
                 .init(
                     style: .blocksTapBesidesCutoutPath,
-                    message: NSAttributedString(string: "You have to tap here to continue. Tap again to restart these instructions."),
+                    message: .init(attributedString: NSAttributedString(string: "You have to tap here to continue. Tap again to restart these instructions."), backgroundColor: .white),
                     sourceView: label2
                 ),
                 in: view

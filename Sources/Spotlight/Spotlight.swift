@@ -26,11 +26,21 @@ public final class InstructionManager {
             case messageOnly
         }
 
+        public struct Message {
+            let attributedString: NSAttributedString
+            let backgroundColor: UIColor
+
+            public init(attributedString: NSAttributedString, backgroundColor: UIColor) {
+                self.attributedString = attributedString
+                self.backgroundColor = backgroundColor
+            }
+        }
+
         let style: InteractionStyle
-        let message: NSAttributedString
+        let message: Message
         let sourceView: UIView
 
-        public init(style: InteractionStyle, message: NSAttributedString, sourceView: UIView) {
+        public init(style: InteractionStyle, message: Message, sourceView: UIView) {
             self.style = style
             self.message = message
             self.sourceView = sourceView
@@ -97,11 +107,18 @@ public final class InstructionManager {
             throw SpotlightError.interestedViewOutOfBounds
         }
 
+        let sourceViewX = sourceViewFrameInWindow.minX + overlayOuterMargin
+        let sourceViewY = sourceViewFrameInWindow.minY + overlayOuterMargin
+        let cutoutX = sourceViewX - 4
+        let cutoutY = sourceViewY - 4
+        let cutoutCenterX = cutoutX + sourceViewFrameInWindow.width / 2
+        let cutoutHeight = sourceViewFrameInWindow.height + 8
+
         let expanded = CGRect(
-            x: sourceViewFrameInWindow.minX - 4 + overlayOuterMargin,
-            y: sourceViewFrameInWindow.minY - 4 + overlayOuterMargin,
+            x: cutoutX,
+            y: cutoutY,
             width: sourceViewFrameInWindow.width + 8,
-            height: sourceViewFrameInWindow.height + 8
+            height: cutoutHeight
         )
 
         overlay.cutoutPath = expanded
@@ -121,6 +138,60 @@ public final class InstructionManager {
             }
 
         }
+
+        let label = UILabel()
+        label.attributedText = instruction.message.attributedString
+        label.numberOfLines = 0
+        let container = UIView()
+        container.layer.cornerRadius = 5
+        container.backgroundColor = instruction.message.backgroundColor
+
+        let arrow = UIView()
+        arrow.layer.cornerRadius = 5
+        arrow.backgroundColor = instruction.message.backgroundColor
+        arrow.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
+
+        [label, container, arrow].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        let rectHeight: CGFloat = 30
+        let arrowHeight: CGFloat = rectHeight * sqrt(2) / 2
+        let labelPadding: CGFloat = 15
+
+        container.constrainSubview(label, horizontal: labelPadding, vertical: labelPadding)
+        overlay.addSubview(container)
+        overlay.addSubview(arrow)
+
+        NSLayoutConstraint.activate([
+            arrow.widthAnchor.constraint(equalToConstant: 30),
+            arrow.heightAnchor.constraint(equalToConstant: 30),
+            arrow.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX),
+            container.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX).priority(.defaultLow),
+            container.leadingAnchor.constraint(greaterThanOrEqualTo: window.leadingAnchor, constant: 15),
+            container.trailingAnchor.constraint(lessThanOrEqualTo: window.trailingAnchor, constant: -15),
+            container.widthAnchor.constraint(lessThanOrEqualToConstant: window.frame.width - window.safeAreaInsets.right - window.safeAreaInsets.left - 30),
+        ])
+
+        let arrowConstraints: [NSLayoutConstraint] = {
+
+            container.layoutIfNeeded()
+
+            if sourceViewFrameInWindow.minY < container.frame.height + rectHeight {
+                // does not fit in top margin
+                return [
+                    arrow.topAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY + cutoutHeight + 10),
+                    container.topAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY + cutoutHeight + 2 + arrowHeight),
+                ]
+            } else {
+                return [
+                    arrow.bottomAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY - 10),
+                    container.bottomAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY - 2 - arrowHeight),
+                ]
+            }
+        }()
+
+        NSLayoutConstraint.activate(arrowConstraints)
     }
 
     private var isClosing = false
