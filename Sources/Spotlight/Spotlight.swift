@@ -160,8 +160,8 @@ public final class InstructionManager {
         let labelPadding: CGFloat = 15
 
         container.constrainSubview(label, horizontal: labelPadding, vertical: labelPadding)
+        overlay.addSubview(arrow) // NOTE: `arrow` has to be below mesasge `container`
         overlay.addSubview(container)
-        overlay.addSubview(arrow)
 
         NSLayoutConstraint.activate([
             arrow.widthAnchor.constraint(equalToConstant: 30),
