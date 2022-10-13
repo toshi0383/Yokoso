@@ -26,5 +26,9 @@ final class MessageLabel: UIView {
         let labelPadding: CGFloat = 15
 
         constrainSubview(label, horizontal: labelPadding, vertical: labelPadding)
+
+        NSLayoutConstraint.activate([
+            widthAnchor.constraint(lessThanOrEqualToConstant: message.maxWidth),
+        ])
     }
 }

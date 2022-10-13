@@ -66,6 +66,7 @@ public final class InstructionManager {
             || sourceViewFrameInWindow.maxY > window.bounds.height
             || sourceViewFrameInWindow.maxX > window.bounds.width
         {
+            dismissOverlayAnimated()
             throw SpotlightError.interestedViewOutOfBounds
         }
 
@@ -121,12 +122,14 @@ public final class InstructionManager {
         NSLayoutConstraint.activate([
             arrow.widthAnchor.constraint(equalToConstant: 30),
             arrow.heightAnchor.constraint(equalToConstant: 30),
-            arrow.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX),
-            arrow.leadingAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-            arrow.trailingAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            arrow.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX).priority(.defaultLow),
+            arrow.leadingAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leadingAnchor, constant: 5),
+            arrow.trailingAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            arrow.leadingAnchor.constraint(greaterThanOrEqualTo: messageLabel.leadingAnchor, constant: 10),
+            arrow.trailingAnchor.constraint(lessThanOrEqualTo: messageLabel.trailingAnchor, constant: 10),
             messageLabel.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX).priority(.defaultLow),
-            messageLabel.leadingAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-            messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            messageLabel.leadingAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leadingAnchor, constant: 5),
+            messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -5),
             messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: window.frame.width - window.safeAreaInsets.right - window.safeAreaInsets.left - 30),
         ])
 
@@ -172,8 +175,12 @@ public final class InstructionManager {
 
         window = nil
 
-        UIView.animate(withDuration: 0.3) {
-            overlay.alpha = 0
+        dismissOverlayAnimated()
+    }
+
+    private func dismissOverlayAnimated() {
+        UIView.animate(withDuration: 0.3) { [weak overlay] in
+            overlay?.alpha = 0
         }
     }
 }

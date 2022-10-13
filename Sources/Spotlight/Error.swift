@@ -1,3 +1,3 @@
-enum SpotlightError: Error {
+public enum SpotlightError: Error {
     case interestedViewOutOfBounds
 }

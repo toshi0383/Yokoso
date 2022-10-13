@@ -80,46 +80,58 @@ final class ChildViewController: UIViewController {
     }
 
     private func startI1() {
-        isShowingInstruction = true
-
-        do {
-            try manager.show(
-                .init(
-                    style: .messageOnly,
-                    message: .init(attributedString: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .white),
-                    sourceView: label1
-                ),
-                in: view
-            ) { [weak self] in
-                guard let me = self else { return }
-
-                me.startI2()
-            }
-
-        } catch {
-            assertionFailure("\(error)")
+        show(
+            .init(
+                style: .messageOnly,
+                message: .init(attributedString: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .white),
+                sourceView: label1
+            )
+        ) { [weak self] in
+            self?.startI2()
         }
     }
 
     private func startI2() {
+        show(
+            .init(
+                style: .blocksTapBesidesCutoutPath,
+                message: .init(attributedString: NSAttributedString(string: "You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .white),
+                sourceView: label2
+            )
+        )
+    }
+
+    private func show(_ instruction: Instruction, onFinish: (() -> ())? = nil) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            self._show(instruction, onFinish: onFinish)
+        }
+    }
+
+    private func _show(_ instruction: Instruction, onFinish: (() -> ())? = nil) {
         isShowingInstruction = true
 
         do {
             try manager.show(
-                .init(
-                    style: .blocksTapBesidesCutoutPath,
-                    message: .init(attributedString: NSAttributedString(string: "You have to tap here to continue. Tap again to restart these instructions."), backgroundColor: .white),
-                    sourceView: label2
-                ),
+                instruction,
                 in: view
             ) { [weak self] in
                 guard let me = self else { return }
 
                 me.isShowingInstruction = false
+                onFinish?()
             }
         } catch {
-            assertionFailure("\(error)")
+            isShowingInstruction = false
+            if let error = error as? SpotlightError {
+                showError(error)
+            }
         }
+    }
+
+    private func showError(_ error: SpotlightError) {
+        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
     @objc private func tap1() {

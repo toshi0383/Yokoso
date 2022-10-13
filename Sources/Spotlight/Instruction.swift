@@ -24,10 +24,16 @@ public struct Instruction {
     public struct Message {
         let attributedString: NSAttributedString
         let backgroundColor: UIColor
+        let maxWidth: CGFloat
 
-        public init(attributedString: NSAttributedString, backgroundColor: UIColor) {
+        public init(
+            attributedString: NSAttributedString,
+            backgroundColor: UIColor,
+            maxWidth: CGFloat = 375
+        ) {
             self.attributedString = attributedString
             self.backgroundColor = backgroundColor
+            self.maxWidth = maxWidth
         }
     }
 
