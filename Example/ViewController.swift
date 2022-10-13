@@ -79,7 +79,7 @@ final class ChildViewController: UIViewController {
         manager.show(
             .init(
                 style: .messageOnly,
-                message: NSAttributedString(string: "aaa"),
+                message: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."),
                 sourceView: label1
             ),
             in: view
@@ -96,14 +96,13 @@ final class ChildViewController: UIViewController {
         manager.show(
             .init(
                 style: .blocksTapBesidesCutoutPath,
-                message: NSAttributedString(string: "aaa"),
+                message: NSAttributedString(string: "You have to tap here to continue. Tap again to restart these instructions."),
                 sourceView: label2
             ),
             in: view
         ) { [weak self] in
             guard let me = self else { return }
 
-            print("onFinish 2")
             me.isShowingInstruction = false
         }
     }
