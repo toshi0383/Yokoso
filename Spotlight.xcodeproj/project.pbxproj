@@ -29,6 +29,8 @@
 		8A51EA5D28F6DE9100970A37 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA5C28F6DE9100970A37 /* OverlayView.swift */; };
 		8A51EA6128F82B2200970A37 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6028F82B2200970A37 /* Error.swift */; };
 		8A51EA6328F8378900970A37 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6228F8378900970A37 /* Utilities.swift */; };
+		8A51EA6528F839CB00970A37 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6428F839CB00970A37 /* MessageLabel.swift */; };
+		8A51EA6728F839FE00970A37 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6628F839FE00970A37 /* Instruction.swift */; };
 		OBJ_21 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Spotlight.swift */; };
 		OBJ_28 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +57,8 @@
 		8A51EA5C28F6DE9100970A37 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		8A51EA6028F82B2200970A37 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		8A51EA6228F8378900970A37 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		8A51EA6428F839CB00970A37 /* MessageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
+		8A51EA6628F839FE00970A37 /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
 		"spotlight::Spotlight::Product" /* Spotlight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Spotlight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* Spotlight.swift */,
+				8A51EA6628F839FE00970A37 /* Instruction.swift */,
+				8A51EA6428F839CB00970A37 /* MessageLabel.swift */,
 				8A51EA6228F8378900970A37 /* Utilities.swift */,
 				8A51EA6028F82B2200970A37 /* Error.swift */,
 				8A51EA5C28F6DE9100970A37 /* OverlayView.swift */,
@@ -248,8 +254,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				8A51EA6728F839FE00970A37 /* Instruction.swift in Sources */,
 				OBJ_21 /* Spotlight.swift in Sources */,
 				8A51EA6128F82B2200970A37 /* Error.swift in Sources */,
+				8A51EA6528F839CB00970A37 /* MessageLabel.swift in Sources */,
 				8A51EA6328F8378900970A37 /* Utilities.swift in Sources */,
 				8A51EA5D28F6DE9100970A37 /* OverlayView.swift in Sources */,
 			);

@@ -31,6 +31,15 @@ final class ChildViewController: UIViewController {
     private let label2 = UIButton()
     private var isShowingInstruction = false
 
+    private let vStack: UIStackView = {
+        let vStack = UIStackView()
+        vStack.axis = .vertical
+        vStack.distribution = .fill
+        vStack.alignment = .fill
+        vStack.spacing = 0
+        return vStack
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,15 +56,6 @@ final class ChildViewController: UIViewController {
             label2.addTarget(self, action: #selector(tap2), for: .touchUpInside)
         }
 
-        let vStack: UIStackView = {
-            let vStack = UIStackView()
-            vStack.axis = .vertical
-            vStack.distribution = .fill
-            vStack.alignment = .fill
-            vStack.spacing = 0
-            return vStack
-        }()
-
         [label1, label2].forEach {
             $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
             $0.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -63,15 +63,21 @@ final class ChildViewController: UIViewController {
             vStack.addArrangedSubview($0)
         }
 
-        vStack.translatesAutoresizingMaskIntoConstraints = false
+        vStack.frame = CGRect(origin: originalVStackPoint, size: CGSize(width: 100, height: 200))
+        vStack.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         view.addSubview(vStack)
-
-        NSLayoutConstraint.activate([
-            vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            vStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-        ])
     }
 
+    private var originalVStackPoint: CGPoint = .init(x: 50, y: 50)
+
+    @objc private func handlePan(_ panGesture: UIPanGestureRecognizer) {
+        if panGesture.state == .began {
+            originalVStackPoint = vStack.frame.origin
+        }
+        let t = panGesture.translation(in: view)
+        let o = originalVStackPoint
+        vStack.frame.origin = CGPoint(x: t.x + o.x, y: t.y + o.y)
+    }
 
     private func startI1() {
         isShowingInstruction = true

@@ -5,48 +5,6 @@ let overlayOuterMargin: CGFloat = 500
 
 public final class InstructionManager {
 
-    public struct Instruction {
-
-        public enum InteractionStyle {
-
-            /// - Shows message
-            /// - Only tappable inside cutoutPath
-            /// - Does not close by itself
-            case blocksTapBesidesCutoutPath
-
-            /// - Shows message
-            /// - Shows NextButton
-            /// - Tap anywhere to close
-            /// - "Tap through" inside cutoutPath while closing
-            case nextButton
-
-            /// - Shows message
-            /// - Tap anywhere to close
-            /// - "Tap through" inside cutoutPath while closing
-            case messageOnly
-        }
-
-        public struct Message {
-            let attributedString: NSAttributedString
-            let backgroundColor: UIColor
-
-            public init(attributedString: NSAttributedString, backgroundColor: UIColor) {
-                self.attributedString = attributedString
-                self.backgroundColor = backgroundColor
-            }
-        }
-
-        let style: InteractionStyle
-        let message: Message
-        let sourceView: UIView
-
-        public init(style: InteractionStyle, message: Message, sourceView: UIView) {
-            self.style = style
-            self.message = message
-            self.sourceView = sourceView
-        }
-    }
-
     private weak var window: UIWindow?
     private var onFinish: (() -> ())?
 
@@ -139,54 +97,46 @@ public final class InstructionManager {
 
         }
 
-        let label = UILabel()
-        label.attributedText = instruction.message.attributedString
-        label.numberOfLines = 0
-        let container = UIView()
-        container.layer.cornerRadius = 5
-        container.backgroundColor = instruction.message.backgroundColor
+        let messageLabel = MessageLabel(instruction.message)
 
         let arrow = UIView()
         arrow.layer.cornerRadius = 5
         arrow.backgroundColor = instruction.message.backgroundColor
         arrow.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
 
-        [label, container, arrow].forEach {
+        [messageLabel, arrow].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
         let rectHeight: CGFloat = 30
         let arrowHeight: CGFloat = rectHeight * sqrt(2) / 2
-        let labelPadding: CGFloat = 15
 
-        container.constrainSubview(label, horizontal: labelPadding, vertical: labelPadding)
         overlay.addSubview(arrow) // NOTE: `arrow` has to be below mesasge `container`
-        overlay.addSubview(container)
+        overlay.addSubview(messageLabel)
 
         NSLayoutConstraint.activate([
             arrow.widthAnchor.constraint(equalToConstant: 30),
             arrow.heightAnchor.constraint(equalToConstant: 30),
             arrow.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX),
-            container.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX).priority(.defaultLow),
-            container.leadingAnchor.constraint(greaterThanOrEqualTo: window.leadingAnchor, constant: 15),
-            container.trailingAnchor.constraint(lessThanOrEqualTo: window.trailingAnchor, constant: -15),
-            container.widthAnchor.constraint(lessThanOrEqualToConstant: window.frame.width - window.safeAreaInsets.right - window.safeAreaInsets.left - 30),
+            messageLabel.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX).priority(.defaultLow),
+            messageLabel.leadingAnchor.constraint(greaterThanOrEqualTo: window.leadingAnchor, constant: 15),
+            messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: window.trailingAnchor, constant: -15),
+            messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: window.frame.width - window.safeAreaInsets.right - window.safeAreaInsets.left - 30),
         ])
 
         let arrowConstraints: [NSLayoutConstraint] = {
 
-            container.layoutIfNeeded()
+            messageLabel.layoutIfNeeded()
 
-            if sourceViewFrameInWindow.minY < container.frame.height + rectHeight {
-                // does not fit in top margin
+            if window.frame.height - sourceViewFrameInWindow.maxY < messageLabel.frame.height + rectHeight {
                 return [
-                    arrow.topAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY + cutoutHeight + 10),
-                    container.topAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY + cutoutHeight + 2 + arrowHeight),
+                    arrow.bottomAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY - 10),
+                    messageLabel.bottomAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY - 2 - arrowHeight),
                 ]
             } else {
                 return [
-                    arrow.bottomAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY - 10),
-                    container.bottomAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY - 2 - arrowHeight),
+                    arrow.topAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY + cutoutHeight + 10),
+                    messageLabel.topAnchor.constraint(equalTo: overlay.topAnchor, constant: cutoutY + cutoutHeight + 2 + arrowHeight),
                 ]
             }
         }()
