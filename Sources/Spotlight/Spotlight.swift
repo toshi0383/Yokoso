@@ -61,7 +61,11 @@ public final class InstructionManager {
             return
         }
 
-        if sourceViewFrameInWindow.minX < 0 || sourceViewFrameInWindow.minY < 0 {
+        if sourceViewFrameInWindow.minX < 0
+            || sourceViewFrameInWindow.minY < 0
+            || sourceViewFrameInWindow.maxY > window.bounds.height
+            || sourceViewFrameInWindow.maxX > window.bounds.width
+        {
             throw SpotlightError.interestedViewOutOfBounds
         }
 
@@ -118,12 +122,15 @@ public final class InstructionManager {
             arrow.widthAnchor.constraint(equalToConstant: 30),
             arrow.heightAnchor.constraint(equalToConstant: 30),
             arrow.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX),
+            arrow.leadingAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            arrow.trailingAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             messageLabel.centerXAnchor.constraint(equalTo: overlay.leadingAnchor, constant: cutoutCenterX).priority(.defaultLow),
-            messageLabel.leadingAnchor.constraint(greaterThanOrEqualTo: window.leadingAnchor, constant: 15),
-            messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: window.trailingAnchor, constant: -15),
+            messageLabel.leadingAnchor.constraint(greaterThanOrEqualTo: window.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: window.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: window.frame.width - window.safeAreaInsets.right - window.safeAreaInsets.left - 30),
         ])
 
+        // Deciding arrow direction
         let arrowConstraints: [NSLayoutConstraint] = {
 
             messageLabel.layoutIfNeeded()
