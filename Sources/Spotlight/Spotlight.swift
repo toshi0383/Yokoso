@@ -53,9 +53,8 @@ public final class InstructionManager {
     }
 
     private func _show(_ instruction: Instruction) throws {
-        overlay = OverlayView()
 
-        guard let window, let overlay else { return }
+        guard let window else { return }
 
         guard let sourceViewFrameInWindow = instruction.sourceView.superview?.convert(instruction.sourceView.frame, to: window) else {
             return
@@ -69,6 +68,9 @@ public final class InstructionManager {
             dismissOverlayAnimated()
             throw SpotlightError.interestedViewOutOfBounds
         }
+
+        let overlay = OverlayView()
+        self.overlay = overlay
 
         let sourceViewX = sourceViewFrameInWindow.minX + overlayOuterMargin
         let sourceViewY = sourceViewFrameInWindow.minY + overlayOuterMargin
