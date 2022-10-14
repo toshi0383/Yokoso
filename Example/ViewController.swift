@@ -82,7 +82,7 @@ final class ChildViewController: UIViewController {
     private func startI1() {
         show(
             .init(
-                style: .messageOnly,
+                style: .nextButton,
                 message: .init(attributedString: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .white),
                 sourceView: label1
             )
@@ -94,7 +94,7 @@ final class ChildViewController: UIViewController {
     private func startI2() {
         show(
             .init(
-                style: .blocksTapBesidesCutoutPath,
+                style: .blocksTapOutsideCutoutPath,
                 message: .init(attributedString: NSAttributedString(string: "You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .white),
                 sourceView: label2
             )

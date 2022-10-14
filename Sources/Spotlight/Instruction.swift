@@ -7,7 +7,7 @@ public struct Instruction {
         /// - Shows message
         /// - Only tappable inside cutoutPath
         /// - Does not close by itself
-        case blocksTapBesidesCutoutPath
+        case blocksTapOutsideCutoutPath
 
         /// - Shows message
         /// - Shows NextButton

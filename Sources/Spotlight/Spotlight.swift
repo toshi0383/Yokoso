@@ -86,7 +86,7 @@ public final class InstructionManager {
 
         overlay.cutoutPath = expanded
 
-        if instruction.style != .blocksTapBesidesCutoutPath {
+        if instruction.style != .blocksTapOutsideCutoutPath {
             overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
         }
 
