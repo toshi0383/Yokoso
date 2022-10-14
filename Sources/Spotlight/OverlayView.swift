@@ -12,10 +12,10 @@ final class OverlayView: UIView {
     var onHitInsideCutoutPath: (() -> ())?
     private var preWidth: CGFloat?
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(backgroundColor: UIColor) {
+        super.init(frame: .zero)
 
-        backgroundColor = .black.withAlphaComponent(0.4)
+        self.backgroundColor = backgroundColor
     }
 
     required init?(coder: NSCoder) { fatalError() }

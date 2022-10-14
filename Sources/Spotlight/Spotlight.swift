@@ -9,6 +9,7 @@ public final class InstructionManager {
     private var onFinish: (() -> ())?
 
     public var isStarted: Bool { window != nil }
+    private let overlayBackgroundColor: UIColor
 
     private var overlay: OverlayView? {
         didSet {
@@ -38,7 +39,9 @@ public final class InstructionManager {
         }
     }
 
-    public init() {}
+    public init(overlayBackgroundColor: UIColor = .black.withAlphaComponent(0.4)) {
+        self.overlayBackgroundColor = overlayBackgroundColor
+    }
 
     /// - throws: `SpotlightError.interestedViewOutOfBounds`
     public func show(
@@ -69,7 +72,7 @@ public final class InstructionManager {
             throw SpotlightError.interestedViewOutOfBounds
         }
 
-        let overlay = OverlayView()
+        let overlay = OverlayView(backgroundColor: overlayBackgroundColor)
         self.overlay = overlay
 
         let sourceViewX = sourceViewFrameInWindow.minX + overlayOuterMargin
