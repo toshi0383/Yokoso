@@ -13,12 +13,22 @@ public struct Instruction {
         /// - Shows NextButton
         /// - Tap anywhere to close
         /// - "Tap through" inside cutoutPath while closing
-        case nextButton
+        case nextButton(NSAttributedString)
 
         /// - Shows message
         /// - Tap anywhere to close
         /// - "Tap through" inside cutoutPath while closing
         case messageOnly
+
+        var needsNextButton: Bool {
+            guard case .nextButton = self else { return false }
+            return true
+        }
+
+        var blocksTapOutsideCutoutPath: Bool {
+            guard case .blocksTapOutsideCutoutPath = self else { return false }
+            return true
+        }
     }
 
     public struct Message {

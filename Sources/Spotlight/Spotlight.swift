@@ -86,8 +86,16 @@ public final class InstructionManager {
 
         overlay.cutoutPath = expanded
 
-        if instruction.style != .blocksTapOutsideCutoutPath {
+        let messageLabel = MessageLabel(instruction)
+
+        switch instruction.style {
+        case .nextButton:
             overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
+            messageLabel.onTapNext = { [weak self] in self?.close() }
+        case .messageOnly:
+            overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
+        case .blocksTapOutsideCutoutPath:
+            break
         }
 
         overlay.onHitInsideCutoutPath = { [weak self] in self?.close() }
@@ -101,8 +109,6 @@ public final class InstructionManager {
             }
 
         }
-
-        let messageLabel = MessageLabel(instruction.message)
 
         let arrow = UIView()
         arrow.layer.cornerRadius = 5

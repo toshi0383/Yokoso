@@ -2,10 +2,11 @@ import UIKit
 
 final class MessageLabel: UIView {
 
-    let message: Instruction.Message
+    let instruction: Instruction
+    var onTapNext: (() -> ())?
 
-    init(_ message: Instruction.Message) {
-        self.message = message
+    init(_ instruction: Instruction) {
+        self.instruction = instruction
 
         super.init(frame: .zero)
 
@@ -15,6 +16,7 @@ final class MessageLabel: UIView {
     required init?(coder: NSCoder) { fatalError() }
 
     private func configureLayout() {
+        let message = instruction.message
 
         layer.cornerRadius = 5
         backgroundColor = message.backgroundColor
@@ -25,10 +27,38 @@ final class MessageLabel: UIView {
 
         let labelPadding: CGFloat = 15
 
-        constrainSubview(label, horizontal: labelPadding, vertical: labelPadding)
+        let vStack: UIStackView = {
+            let vStack = UIStackView()
+            vStack.axis = .vertical
+            vStack.distribution = .fill
+            vStack.alignment = .center
+            vStack.spacing = 0
+            return vStack
+        }()
+
+        [label].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            vStack.addArrangedSubview($0)
+        }
+
+        let bottom: CGFloat = instruction.style.needsNextButton ? 5 : labelPadding
+
+        constrainSubview(vStack, top: labelPadding, bottom: bottom, leading: labelPadding, trailing: labelPadding)
+
+        if case .nextButton(let nextText) = instruction.style {
+            let button = UIButton()
+            button.setAttributedTitle(nextText, for: .normal)
+            button.addTarget(self, action: #selector(tapNext), for: .touchUpInside)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            vStack.addArrangedSubview(button)
+        }
 
         NSLayoutConstraint.activate([
             widthAnchor.constraint(lessThanOrEqualToConstant: message.maxWidth),
         ])
+    }
+
+    @objc private func tapNext() {
+        onTapNext?()
     }
 }

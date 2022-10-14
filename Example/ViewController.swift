@@ -79,10 +79,19 @@ final class ChildViewController: UIViewController {
         vStack.frame.origin = CGPoint(x: t.x + o.x, y: t.y + o.y)
     }
 
+    private var nextButtonAttributedString: NSAttributedString {
+        let attr = NSMutableAttributedString(string: "Next")
+        attr.addAttributes([
+            .font: UIFont.systemFont(ofSize: 14, weight: .bold),
+            .foregroundColor: UIColor.systemRed,
+        ], range: NSRange(location: 0, length: attr.string.count))
+        return attr
+    }
+
     private func startI1() {
         show(
             .init(
-                style: .nextButton,
+                style: .nextButton(nextButtonAttributedString),
                 message: .init(attributedString: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .white),
                 sourceView: label1
             )
