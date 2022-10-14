@@ -47,12 +47,12 @@ public struct Instruction {
         }
     }
 
-    let style: InteractionStyle
+    let interactionStyle: InteractionStyle
     let message: Message
     let sourceView: UIView
 
     public init(style: InteractionStyle, message: Message, sourceView: UIView) {
-        self.style = style
+        self.interactionStyle = style
         self.message = message
         self.sourceView = sourceView
     }

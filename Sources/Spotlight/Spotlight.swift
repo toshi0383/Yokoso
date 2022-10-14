@@ -88,7 +88,7 @@ public final class InstructionManager {
 
         let messageLabel = MessageLabel(instruction)
 
-        switch instruction.style {
+        switch instruction.interactionStyle {
         case .nextButton:
             overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
             messageLabel.onTapNext = { [weak self] in self?.close() }
