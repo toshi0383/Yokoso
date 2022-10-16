@@ -93,14 +93,14 @@ public final class InstructionManager {
 
         let messageLabel = MessageLabel(instruction)
 
-        switch instruction.interactionStyle {
-        case .nextButton:
+        if !instruction.blocksTapOutsideCutoutPath {
+
+            if instruction.nextButton != nil {
+                overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
+                messageLabel.onTapNext = { [weak self] in self?.close() }
+            }
+
             overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
-            messageLabel.onTapNext = { [weak self] in self?.close() }
-        case .messageOnly:
-            overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
-        case .blocksTapOutsideCutoutPath:
-            break
         }
 
         overlay.onHitInsideCutoutPath = { [weak self] in self?.close() }
@@ -167,7 +167,7 @@ public final class InstructionManager {
 
     private var isClosing = false
 
-    @objc private func close() {
+    @objc public func close() {
         guard let overlay, !isClosing else { return }
 
         isClosing = true

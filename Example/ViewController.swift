@@ -29,6 +29,7 @@ final class ChildViewController: UIViewController {
 
     private let label1 = UIButton()
     private let label2 = UIButton()
+    private let label3 = UIButton()
     private var isShowingInstruction = false
 
     private let vStack: UIStackView = {
@@ -49,6 +50,7 @@ final class ChildViewController: UIViewController {
             label1.backgroundColor = .systemGreen
             label1.addTarget(self, action: #selector(tap1), for: .touchUpInside)
         }
+
         do {
             label2.backgroundColor = .systemCyan
             label2.setTitleColor(.systemBlue, for: .normal)
@@ -56,14 +58,21 @@ final class ChildViewController: UIViewController {
             label2.addTarget(self, action: #selector(tap2), for: .touchUpInside)
         }
 
-        [label1, label2].forEach {
+        do {
+            label3.backgroundColor = .systemYellow
+            label3.setTitleColor(.systemBlue, for: .normal)
+            label3.setTitle("Custom Next", for: .normal)
+            label3.addTarget(self, action: #selector(tap3), for: .touchUpInside)
+        }
+
+        [label1, label2, label3].forEach {
             $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
             $0.heightAnchor.constraint(equalToConstant: 100).isActive = true
             $0.translatesAutoresizingMaskIntoConstraints = false
             vStack.addArrangedSubview($0)
         }
 
-        vStack.frame = CGRect(origin: originalVStackPoint, size: CGSize(width: 100, height: 200))
+        vStack.frame = CGRect(origin: originalVStackPoint, size: CGSize(width: 100, height: 300))
         vStack.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         view.addSubview(vStack)
     }
@@ -91,8 +100,9 @@ final class ChildViewController: UIViewController {
     private func startI1() {
         show(
             .init(
-                style: .nextButton(nextButtonAttributedString),
+                blocksTapOutsideCutoutPath: false,
                 message: .init(attributedString: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .white),
+                nextButton: .simple(nextButtonAttributedString),
                 sourceView: label1
             )
         ) { [weak self] in
@@ -103,11 +113,60 @@ final class ChildViewController: UIViewController {
     private func startI2() {
         show(
             .init(
-                style: .blocksTapOutsideCutoutPath,
+                blocksTapOutsideCutoutPath: true,
                 message: .init(attributedString: NSAttributedString(string: "You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .white),
                 sourceView: label2
             )
+        ) { [weak self] in
+            self?.startI3()
+        }
+    }
+
+    private func startI3() {
+        show(
+            .init(
+                blocksTapOutsideCutoutPath: false,
+                message: .init(attributedString: NSAttributedString(string: "Bottom area is fully customizable. 🍣"), backgroundColor: .white),
+                nextButton: .custom(makeNextButtonView()),
+                sourceView: label3
+            )
         )
+    }
+
+    private func makeNextButtonView() -> UIView {
+        let hStack: UIStackView = {
+            let hStack = UIStackView()
+            hStack.axis = .horizontal
+            hStack.distribution = .equalSpacing
+            hStack.alignment = .center
+            hStack.spacing = 0
+            return hStack
+        }()
+
+        let progress = UILabel()
+        progress.text = "🍣"
+        let next = UIButton(type: .roundedRect)
+        next.setTitle("Next", for: .normal)
+        let skip = UIButton(type: .roundedRect)
+        skip.setTitle("Skip", for: .normal)
+
+        next.addTarget(self, action: #selector(nextByCustomButton), for: .touchUpInside)
+        skip.addTarget(self, action: #selector(skipByCustomButton), for: .touchUpInside)
+
+        [next, progress, skip].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            hStack.addArrangedSubview($0)
+        }
+
+        return hStack
+    }
+
+    @objc private func nextByCustomButton() {
+        manager.close()
+    }
+
+    @objc private func skipByCustomButton() {
+        manager.close()
     }
 
     private func show(_ instruction: Instruction, onFinish: (() -> ())? = nil) {
@@ -154,6 +213,13 @@ final class ChildViewController: UIViewController {
         print(#function)
         if !isShowingInstruction {
             startI2()
+        }
+    }
+
+    @objc private func tap3() {
+        print(#function)
+        if !isShowingInstruction {
+            startI3()
         }
     }
 }

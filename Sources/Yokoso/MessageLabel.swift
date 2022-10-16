@@ -31,7 +31,7 @@ final class MessageLabel: UIView {
             let vStack = UIStackView()
             vStack.axis = .vertical
             vStack.distribution = .fill
-            vStack.alignment = .center
+            vStack.alignment = .fill
             vStack.spacing = 0
             return vStack
         }()
@@ -41,16 +41,24 @@ final class MessageLabel: UIView {
             vStack.addArrangedSubview($0)
         }
 
-        let bottom: CGFloat = instruction.interactionStyle.needsNextButton ? 5 : labelPadding
+        let bottom: CGFloat = instruction.nextButton == nil ? labelPadding : 5
 
         constrainSubview(vStack, top: labelPadding, bottom: bottom, leading: labelPadding, trailing: labelPadding)
 
-        if case .nextButton(let nextText) = instruction.interactionStyle {
-            let button = UIButton()
-            button.setAttributedTitle(nextText, for: .normal)
-            button.addTarget(self, action: #selector(tapNext), for: .touchUpInside)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            vStack.addArrangedSubview(button)
+        if let nextButton = instruction.nextButton {
+            switch nextButton {
+
+            case .simple(let nextText):
+                let button = UIButton()
+                button.setAttributedTitle(nextText, for: .normal)
+                button.addTarget(self, action: #selector(tapNext), for: .touchUpInside)
+                button.translatesAutoresizingMaskIntoConstraints = false
+                vStack.addArrangedSubview(button)
+
+            case .custom(let customView):
+                customView.translatesAutoresizingMaskIntoConstraints = false
+                vStack.addArrangedSubview(customView)
+            }
         }
 
         NSLayoutConstraint.activate([

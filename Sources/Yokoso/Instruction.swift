@@ -2,35 +2,6 @@ import UIKit
 
 public struct Instruction {
 
-    public enum InteractionStyle {
-
-        /// - Shows message
-        /// - Only tappable inside cutoutPath
-        /// - Does not close by itself
-        case blocksTapOutsideCutoutPath
-
-        /// - Shows message
-        /// - Shows NextButton
-        /// - Tap anywhere to close
-        /// - "Tap through" inside cutoutPath while closing
-        case nextButton(NSAttributedString)
-
-        /// - Shows message
-        /// - Tap anywhere to close
-        /// - "Tap through" inside cutoutPath while closing
-        case messageOnly
-
-        var needsNextButton: Bool {
-            guard case .nextButton = self else { return false }
-            return true
-        }
-
-        var blocksTapOutsideCutoutPath: Bool {
-            guard case .blocksTapOutsideCutoutPath = self else { return false }
-            return true
-        }
-    }
-
     public struct Message {
         let attributedString: NSAttributedString
         let backgroundColor: UIColor
@@ -47,13 +18,24 @@ public struct Instruction {
         }
     }
 
-    let interactionStyle: InteractionStyle
+    public enum NextButton {
+        case simple(NSAttributedString)
+        case custom(UIView)
+    }
+
+    /// If true:
+    /// - Only tappable inside cutoutPath
+    /// - Does not close by itself
+    let blocksTapOutsideCutoutPath: Bool
+
     let message: Message
+    let nextButton: NextButton?
     let sourceView: UIView
 
-    public init(style: InteractionStyle, message: Message, sourceView: UIView) {
-        self.interactionStyle = style
+    public init(blocksTapOutsideCutoutPath: Bool, message: Message, nextButton: NextButton? = nil, sourceView: UIView) {
+        self.blocksTapOutsideCutoutPath = blocksTapOutsideCutoutPath
         self.message = message
+        self.nextButton = nextButton
         self.sourceView = sourceView
     }
 }
