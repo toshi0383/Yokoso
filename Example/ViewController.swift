@@ -165,8 +165,8 @@ final class ChildViewController: UIViewController {
         show(
             .init(
                 blocksTapOutsideCutoutPath: false,
-                message: .init(attributedString: makeMessage("Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .background),
-                nextButton: .simple(nextButtonAttributedString),
+                message: .init(attributedString: makeMessage("Hi with simple Next button. Tap anywhere to continue."), backgroundColor: .background),
+                nextButton: .simple("Next"),
                 sourceView: label1
             )
         ) { [weak self] success in
@@ -201,16 +201,7 @@ final class ChildViewController: UIViewController {
         }
     }
 
-    // MARK: Simple/Custom NextButton
-
-    private var nextButtonAttributedString: NSAttributedString {
-        let attr = NSMutableAttributedString(string: "Next")
-        attr.addAttributes([
-            .font: UIFont.systemFont(ofSize: 14, weight: .bold),
-            .foregroundColor: UIColor.systemRed,
-        ], range: NSRange(location: 0, length: attr.string.count))
-        return attr
-    }
+    // MARK: Custom Message and NextButton
 
     private func makeMessage(_ value: String) -> NSAttributedString {
         let attr = NSMutableAttributedString(string: value)

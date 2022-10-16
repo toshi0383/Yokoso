@@ -49,8 +49,8 @@ final class MessageLabel: UIView {
             switch nextButton {
 
             case .simple(let nextText):
-                let button = UIButton()
-                button.setAttributedTitle(nextText, for: .normal)
+                let button = UIButton(type: .system)
+                button.setTitle(nextText, for: .normal)
                 button.addTarget(self, action: #selector(tapNext), for: .touchUpInside)
                 button.translatesAutoresizingMaskIntoConstraints = false
                 vStack.addArrangedSubview(button)

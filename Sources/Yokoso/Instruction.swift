@@ -19,7 +19,7 @@ public struct Instruction {
     }
 
     public enum NextButton {
-        case simple(NSAttributedString)
+        case simple(String)
         case custom(UIView)
     }
 
