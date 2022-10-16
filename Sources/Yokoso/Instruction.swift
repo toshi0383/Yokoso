@@ -23,16 +23,20 @@ public struct Instruction {
         case custom(UIView)
     }
 
+    let message: Message
+    let nextButton: NextButton?
+    let sourceView: UIView
+
     /// If true:
     /// - Only tappable inside cutoutPath
     /// - Does not close by itself
     let blocksTapOutsideCutoutPath: Bool
 
-    let message: Message
-    let nextButton: NextButton?
-    let sourceView: UIView
-
-    public init(blocksTapOutsideCutoutPath: Bool, message: Message, nextButton: NextButton? = nil, sourceView: UIView) {
+    /// - parameter message: message struct value
+    /// - parameter nextButton: NextButton enum value. Default: nil
+    /// - parameter sourceView: The interested view.
+    /// - parameter blocksTapOutsideCutoutPath: If true, only tappable inside cutoutPath and does not close by itself. Default: false
+    public init(message: Message, nextButton: NextButton? = nil, sourceView: UIView, blocksTapOutsideCutoutPath: Bool = false) {
         if case .simple = nextButton, blocksTapOutsideCutoutPath {
             preconditionFailure("blocksTapOutsideCutoutPath must be false on simple NextButton.")
         }
