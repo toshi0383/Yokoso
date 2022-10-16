@@ -1,8 +1,8 @@
-# Spotlight
+# Yokoso
 
 Simple spotlight instruction framework for UIKit iOS.
 
-## Why Spotlight?
+## Why Yokoso?
 
 - [x] Supports device rotation / iPad SplitView
 - [x] Closure style callback (no complex datasources or delegates)
