@@ -23,9 +23,10 @@ final class ViewController: UIViewController {
     }
 }
 
+/// Making sure that it works inside childVC.
 final class ChildViewController: UIViewController {
 
-    private let manager = InstructionManager()
+    private let manager = InstructionManager(overlayBackgroundColor: .overlayBackground)
 
     private let label1 = UIButton()
     private let label2 = UIButton()
@@ -43,6 +44,15 @@ final class ChildViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        configureLayout()
+    }
+
+    // MARK: Layout
+
+    private func configureLayout() {
+
+        view.backgroundColor = .background
 
         do {
             label1.setTitleColor(.systemRed, for: .normal)
@@ -88,86 +98,7 @@ final class ChildViewController: UIViewController {
         vStack.frame.origin = CGPoint(x: t.x + o.x, y: t.y + o.y)
     }
 
-    private var nextButtonAttributedString: NSAttributedString {
-        let attr = NSMutableAttributedString(string: "Next")
-        attr.addAttributes([
-            .font: UIFont.systemFont(ofSize: 14, weight: .bold),
-            .foregroundColor: UIColor.systemRed,
-        ], range: NSRange(location: 0, length: attr.string.count))
-        return attr
-    }
-
-    private func startI1() {
-        show(
-            .init(
-                blocksTapOutsideCutoutPath: false,
-                message: .init(attributedString: NSAttributedString(string: "Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .white),
-                nextButton: .simple(nextButtonAttributedString),
-                sourceView: label1
-            )
-        ) { [weak self] in
-            self?.startI2()
-        }
-    }
-
-    private func startI2() {
-        show(
-            .init(
-                blocksTapOutsideCutoutPath: true,
-                message: .init(attributedString: NSAttributedString(string: "You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .white),
-                sourceView: label2
-            )
-        ) { [weak self] in
-            self?.startI3()
-        }
-    }
-
-    private func startI3() {
-        show(
-            .init(
-                blocksTapOutsideCutoutPath: false,
-                message: .init(attributedString: NSAttributedString(string: "Bottom area is fully customizable. 🍣"), backgroundColor: .white),
-                nextButton: .custom(makeNextButtonView()),
-                sourceView: label3
-            )
-        )
-    }
-
-    private func makeNextButtonView() -> UIView {
-        let hStack: UIStackView = {
-            let hStack = UIStackView()
-            hStack.axis = .horizontal
-            hStack.distribution = .equalSpacing
-            hStack.alignment = .center
-            hStack.spacing = 0
-            return hStack
-        }()
-
-        let progress = UILabel()
-        progress.text = "🍣"
-        let next = UIButton(type: .roundedRect)
-        next.setTitle("Next", for: .normal)
-        let skip = UIButton(type: .roundedRect)
-        skip.setTitle("Skip", for: .normal)
-
-        next.addTarget(self, action: #selector(nextByCustomButton), for: .touchUpInside)
-        skip.addTarget(self, action: #selector(skipByCustomButton), for: .touchUpInside)
-
-        [next, progress, skip].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            hStack.addArrangedSubview($0)
-        }
-
-        return hStack
-    }
-
-    @objc private func nextByCustomButton() {
-        manager.close()
-    }
-
-    @objc private func skipByCustomButton() {
-        manager.close()
-    }
+    // MARK: Invoking Yokoso Instructions
 
     private func show(_ instruction: Instruction, onFinish: (() -> ())? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
@@ -221,5 +152,99 @@ final class ChildViewController: UIViewController {
         if !isShowingInstruction {
             startI3()
         }
+    }
+
+    private func startI1() {
+        show(
+            .init(
+                blocksTapOutsideCutoutPath: false,
+                message: .init(attributedString: makeMessage("Hi, this is Hello button. Tap anywhere to continue."), backgroundColor: .background),
+                nextButton: .simple(nextButtonAttributedString),
+                sourceView: label1
+            )
+        ) { [weak self] in
+            self?.startI2()
+        }
+    }
+
+    private func startI2() {
+        show(
+            .init(
+                blocksTapOutsideCutoutPath: true,
+                message: .init(attributedString: makeMessage("You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .background),
+                sourceView: label2
+            )
+        ) { [weak self] in
+            self?.startI3()
+        }
+    }
+
+    private func startI3() {
+        show(
+            .init(
+                blocksTapOutsideCutoutPath: false,
+                message: .init(attributedString: makeMessage("Bottom area is fully customizable.🍣"), backgroundColor: .background),
+                nextButton: .custom(makeNextButtonView()),
+                sourceView: label3
+            )
+        )
+    }
+
+    // MARK: Simple/Custom NextButton
+
+    private var nextButtonAttributedString: NSAttributedString {
+        let attr = NSMutableAttributedString(string: "Next")
+        attr.addAttributes([
+            .font: UIFont.systemFont(ofSize: 14, weight: .bold),
+            .foregroundColor: UIColor.systemRed,
+        ], range: NSRange(location: 0, length: attr.string.count))
+        return attr
+    }
+
+    private func makeMessage(_ value: String) -> NSAttributedString {
+        let attr = NSMutableAttributedString(string: value)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        attr.addAttributes([
+            .foregroundColor: UIColor.textPrimary,
+            .font: UIFont.systemFont(ofSize: 14),
+        ], range: NSRangeFromString(value))
+        return attr
+    }
+
+    private func makeNextButtonView() -> UIView {
+        let hStack: UIStackView = {
+            let hStack = UIStackView()
+            hStack.axis = .horizontal
+            hStack.distribution = .equalSpacing
+            hStack.alignment = .center
+            hStack.spacing = 0
+            return hStack
+        }()
+
+        let progress = UILabel()
+        progress.text = "🍣"
+        let next = UIButton(type: .roundedRect)
+        next.setTitle("Next", for: .normal)
+        let skip = UIButton(type: .roundedRect)
+        skip.setTitle("Skip", for: .normal)
+
+        next.addTarget(self, action: #selector(nextByCustomButton), for: .touchUpInside)
+        skip.addTarget(self, action: #selector(skipByCustomButton), for: .touchUpInside)
+
+        [next, progress, skip].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            hStack.addArrangedSubview($0)
+        }
+
+        return hStack
+    }
+
+    @objc private func nextByCustomButton() {
+        manager.close()
+    }
+
+    @objc private func skipByCustomButton() {
+        manager.close()
     }
 }

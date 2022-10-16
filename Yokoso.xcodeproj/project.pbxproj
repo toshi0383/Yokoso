@@ -31,6 +31,7 @@
 		8A51EA6328F8378900970A37 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6228F8378900970A37 /* Utilities.swift */; };
 		8A51EA6528F839CB00970A37 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6428F839CB00970A37 /* MessageLabel.swift */; };
 		8A51EA6728F839FE00970A37 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6628F839FE00970A37 /* Instruction.swift */; };
+		8AF8B03E28FC2C0B00ED4897 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8B03D28FC2C0B00ED4897 /* Utilities.swift */; };
 		OBJ_21 /* Yokoso.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Yokoso.swift */; };
 		OBJ_28 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +61,7 @@
 		8A51EA6428F839CB00970A37 /* MessageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 		8A51EA6628F839FE00970A37 /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		8AF8B03C28FC249D00ED4897 /* Yokoso_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Yokoso_Info.plist; path = Sources/Yokoso_Info.plist; sourceTree = "<group>"; };
+		8AF8B03D28FC2C0B00ED4897 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* Yokoso.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yokoso.swift; sourceTree = "<group>"; };
 		"spotlight::Spotlight::Product" /* Yokoso.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Yokoso.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +95,7 @@
 				8A51EA5328F6DD0D00970A37 /* Assets.xcassets */,
 				8A51EA5528F6DD0D00970A37 /* LaunchScreen.storyboard */,
 				8A51EA5828F6DD0D00970A37 /* Info.plist */,
+				8AF8B03D28FC2C0B00ED4897 /* Utilities.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 			files = (
 				8A51EA4F28F6DD0C00970A37 /* ViewController.swift in Sources */,
 				8A51EA4B28F6DD0C00970A37 /* AppDelegate.swift in Sources */,
+				8AF8B03E28FC2C0B00ED4897 /* Utilities.swift in Sources */,
 				8A51EA4D28F6DD0C00970A37 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
