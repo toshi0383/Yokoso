@@ -33,6 +33,10 @@ public struct Instruction {
     let sourceView: UIView
 
     public init(blocksTapOutsideCutoutPath: Bool, message: Message, nextButton: NextButton? = nil, sourceView: UIView) {
+        if case .simple = nextButton, blocksTapOutsideCutoutPath {
+            preconditionFailure("blocksTapOutsideCutoutPath must be false on simple NextButton.")
+        }
+
         self.blocksTapOutsideCutoutPath = blocksTapOutsideCutoutPath
         self.message = message
         self.nextButton = nextButton
