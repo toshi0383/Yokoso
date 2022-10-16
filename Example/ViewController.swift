@@ -100,24 +100,24 @@ final class ChildViewController: UIViewController {
 
     // MARK: Invoking Yokoso Instructions
 
-    private func show(_ instruction: Instruction, onFinish: (() -> ())? = nil) {
+    private func show(_ instruction: Instruction, onFinish: ((Bool) -> ())? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             self._show(instruction, onFinish: onFinish)
         }
     }
 
-    private func _show(_ instruction: Instruction, onFinish: (() -> ())? = nil) {
+    private func _show(_ instruction: Instruction, onFinish: ((Bool) -> ())? = nil) {
         isShowingInstruction = true
 
         do {
             try manager.show(
                 instruction,
                 in: view
-            ) { [weak self] in
+            ) { [weak self] success in
                 guard let me = self else { return }
 
                 me.isShowingInstruction = false
-                onFinish?()
+                onFinish?(success)
             }
         } catch {
             isShowingInstruction = false
@@ -128,7 +128,14 @@ final class ChildViewController: UIViewController {
     }
 
     private func showError(_ error: InstructionError) {
-        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+
+        let alert = UIAlertController(title: "Error", message: """
+        \(error)
+        You get this error when sourceView is not fully visible inside window bounds.
+        Remember that same situation applys on window size changes(device rotation or iPad SplitView variants).
+        NOTE: This error message is demonstration purpose.
+        """, preferredStyle: .alert)
+
         alert.addAction(.init(title: "OK", style: .default))
         present(alert, animated: true)
     }
@@ -162,7 +169,8 @@ final class ChildViewController: UIViewController {
                 nextButton: .simple(nextButtonAttributedString),
                 sourceView: label1
             )
-        ) { [weak self] in
+        ) { [weak self] success in
+            print("finish 1 \(success)")
             self?.startI2()
         }
     }
@@ -174,7 +182,8 @@ final class ChildViewController: UIViewController {
                 message: .init(attributedString: makeMessage("You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .background),
                 sourceView: label2
             )
-        ) { [weak self] in
+        ) { [weak self] success in
+            print("finish 2 \(success)")
             self?.startI3()
         }
     }
@@ -187,7 +196,9 @@ final class ChildViewController: UIViewController {
                 nextButton: .custom(makeNextButtonView()),
                 sourceView: label3
             )
-        )
+        ) { success in
+            print("finish 3 \(success)")
+        }
     }
 
     // MARK: Simple/Custom NextButton

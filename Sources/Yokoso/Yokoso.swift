@@ -6,7 +6,7 @@ let overlayOuterMargin: CGFloat = 500
 public final class InstructionManager {
 
     private weak var window: UIWindow?
-    private var onFinish: (() -> ())?
+    private var onFinish: ((Bool) -> ())?
 
     public var isStarted: Bool { window != nil }
     private let overlayBackgroundColor: UIColor
@@ -49,7 +49,7 @@ public final class InstructionManager {
     public func show(
         _ instruction: Instruction,
         in view: UIView,
-        onFinish: @escaping () -> ()
+        onFinish: @escaping (Bool) -> ()
     ) throws {
         window = view.window
         self.onFinish = onFinish
@@ -112,7 +112,13 @@ public final class InstructionManager {
             // - NOTE: Supporting device rotation / iPad SplitView
             // - HACK: Layout is not fixed in original window at this time, so check interested frame after some delay.
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) { [weak self] in
-                try? self?._show(instruction)
+                guard let me = self else { return }
+
+                do {
+                    try me._show(instruction)
+                } catch {
+                    me.close(unexpectedly: true)
+                }
             }
 
         }
@@ -169,7 +175,7 @@ public final class InstructionManager {
 
     private var isClosing = false
 
-    @objc public func close() {
+    @objc public func close(unexpectedly: Bool = false) {
         guard let overlay, !isClosing else { return }
 
         isClosing = true
@@ -183,7 +189,8 @@ public final class InstructionManager {
             guard let me = self else { return }
 
             me.isClosing = false
-            me.onFinish?()
+
+            me.onFinish?(!unexpectedly)
         }
 
         window = nil
