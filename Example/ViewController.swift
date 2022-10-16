@@ -164,7 +164,6 @@ final class ChildViewController: UIViewController {
     private func startI1() {
         show(
             .init(
-                blocksTapOutsideCutoutPath: false,
                 message: .init(attributedString: makeMessage("Hi with simple Next button. Tap anywhere to continue."), backgroundColor: .background),
                 nextButton: .simple("Next"),
                 sourceView: label1
@@ -178,9 +177,9 @@ final class ChildViewController: UIViewController {
     private func startI2() {
         show(
             .init(
-                blocksTapOutsideCutoutPath: true,
                 message: .init(attributedString: makeMessage("You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .background),
-                sourceView: label2
+                sourceView: label2,
+                blocksTapOutsideCutoutPath: true
             )
         ) { [weak self] success in
             print("finish 2 \(success)")
@@ -191,7 +190,6 @@ final class ChildViewController: UIViewController {
     private func startI3() {
         show(
             .init(
-                blocksTapOutsideCutoutPath: false,
                 message: .init(attributedString: makeMessage("Bottom area is fully customizable.🍣"), backgroundColor: .background),
                 nextButton: .custom(makeNextButtonView()),
                 sourceView: label3
@@ -228,6 +226,7 @@ final class ChildViewController: UIViewController {
         progress.text = "🍣"
         let next = UIButton(type: .roundedRect)
         next.setTitle("Next", for: .normal)
+        next.setTitleColor(.systemRed, for: .normal)
         let skip = UIButton(type: .roundedRect)
         skip.setTitle("Skip", for: .normal)
 
