@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "spotlight::Spotlight"
-               BuildableName = "Spotlight.framework"
-               BlueprintName = "Spotlight"
-               ReferencedContainer = "container:Spotlight.xcodeproj">
+               BuildableName = "Yokoso.framework"
+               BlueprintName = "Yokoso"
+               ReferencedContainer = "container:Yokoso.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "spotlight::Spotlight"
-            BuildableName = "Spotlight.framework"
-            BlueprintName = "Spotlight"
-            ReferencedContainer = "container:Spotlight.xcodeproj">
+            BuildableName = "Yokoso.framework"
+            BlueprintName = "Yokoso"
+            ReferencedContainer = "container:Yokoso.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

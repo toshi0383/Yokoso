@@ -1,4 +1,4 @@
-import Spotlight
+import Yokoso
 import UIKit
 
 final class ViewController: UIViewController {
@@ -131,13 +131,13 @@ final class ChildViewController: UIViewController {
             }
         } catch {
             isShowingInstruction = false
-            if let error = error as? SpotlightError {
+            if let error = error as? InstructionError {
                 showError(error)
             }
         }
     }
 
-    private func showError(_ error: SpotlightError) {
+    private func showError(_ error: InstructionError) {
         let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
         alert.addAction(.init(title: "OK", style: .default))
         present(alert, animated: true)

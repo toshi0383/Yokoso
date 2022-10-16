@@ -43,7 +43,7 @@ public final class InstructionManager {
         self.overlayBackgroundColor = overlayBackgroundColor
     }
 
-    /// - throws: `SpotlightError.interestedViewOutOfBounds`
+    /// - throws: `InstructionError.interestedViewOutOfBounds`
     public func show(
         _ instruction: Instruction,
         in view: UIView,
@@ -69,7 +69,7 @@ public final class InstructionManager {
             || sourceViewFrameInWindow.maxX > window.bounds.width
         {
             dismissOverlayAnimated()
-            throw SpotlightError.interestedViewOutOfBounds
+            throw InstructionError.interestedViewOutOfBounds
         }
 
         let overlay = OverlayView(backgroundColor: overlayBackgroundColor)

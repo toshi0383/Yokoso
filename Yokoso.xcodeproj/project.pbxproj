@@ -31,7 +31,7 @@
 		8A51EA6328F8378900970A37 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6228F8378900970A37 /* Utilities.swift */; };
 		8A51EA6528F839CB00970A37 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6428F839CB00970A37 /* MessageLabel.swift */; };
 		8A51EA6728F839FE00970A37 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A51EA6628F839FE00970A37 /* Instruction.swift */; };
-		OBJ_21 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Spotlight.swift */; };
+		OBJ_21 /* Yokoso.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Yokoso.swift */; };
 		OBJ_28 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,9 +59,10 @@
 		8A51EA6228F8378900970A37 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		8A51EA6428F839CB00970A37 /* MessageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 		8A51EA6628F839FE00970A37 /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
+		8AF8B03C28FC249D00ED4897 /* Yokoso_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Yokoso_Info.plist; path = Sources/Yokoso_Info.plist; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_9 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
-		"spotlight::Spotlight::Product" /* Spotlight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Spotlight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_9 /* Yokoso.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yokoso.swift; sourceTree = "<group>"; };
+		"spotlight::Spotlight::Product" /* Yokoso.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Yokoso.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +100,13 @@
 		OBJ_13 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				"spotlight::Spotlight::Product" /* Spotlight.framework */,
+				"spotlight::Spotlight::Product" /* Yokoso.framework */,
 				8A51EA4828F6DD0C00970A37 /* Example.app */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -113,29 +114,29 @@
 				8A51EA4928F6DD0C00970A37 /* Example */,
 				OBJ_13 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_8 /* Spotlight */,
+				8AF8B03C28FC249D00ED4897 /* Yokoso_Info.plist */,
+				OBJ_8 /* Yokoso */,
 			);
 			name = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_8 /* Spotlight */ = {
+		OBJ_8 /* Yokoso */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* Spotlight.swift */,
+				OBJ_9 /* Yokoso.swift */,
 				8A51EA6628F839FE00970A37 /* Instruction.swift */,
 				8A51EA6428F839CB00970A37 /* MessageLabel.swift */,
 				8A51EA6228F8378900970A37 /* Utilities.swift */,
 				8A51EA6028F82B2200970A37 /* Error.swift */,
 				8A51EA5C28F6DE9100970A37 /* OverlayView.swift */,
 			);
-			name = Spotlight;
-			path = Sources/Spotlight;
+			name = Yokoso;
+			path = Sources/Yokoso;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
@@ -159,9 +160,9 @@
 			productReference = 8A51EA4828F6DD0C00970A37 /* Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		"spotlight::Spotlight" /* Spotlight */ = {
+		"spotlight::Spotlight" /* Yokoso */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_17 /* Build configuration list for PBXNativeTarget "Spotlight" */;
+			buildConfigurationList = OBJ_17 /* Build configuration list for PBXNativeTarget "Yokoso" */;
 			buildPhases = (
 				OBJ_20 /* Sources */,
 				OBJ_22 /* Frameworks */,
@@ -170,9 +171,9 @@
 			);
 			dependencies = (
 			);
-			name = Spotlight;
+			name = Yokoso;
 			productName = Spotlight;
-			productReference = "spotlight::Spotlight::Product" /* Spotlight.framework */;
+			productReference = "spotlight::Spotlight::Product" /* Yokoso.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		"spotlight::SwiftPMPackageDescription" /* SpotlightPackageDescription */ = {
@@ -205,7 +206,7 @@
 					};
 				};
 			};
-			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Spotlight" */;
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Yokoso" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -213,12 +214,12 @@
 				en,
 				Base,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_13 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				"spotlight::Spotlight" /* Spotlight */,
+				"spotlight::Spotlight" /* Yokoso */,
 				"spotlight::SwiftPMPackageDescription" /* SpotlightPackageDescription */,
 				"spotlight::SpotlightPackageTests::ProductTarget" /* SpotlightPackageTests */,
 				8A51EA4728F6DD0C00970A37 /* Example */,
@@ -255,7 +256,7 @@
 			buildActionMask = 0;
 			files = (
 				8A51EA6728F839FE00970A37 /* Instruction.swift in Sources */,
-				OBJ_21 /* Spotlight.swift in Sources */,
+				OBJ_21 /* Yokoso.swift in Sources */,
 				8A51EA6128F82B2200970A37 /* Error.swift in Sources */,
 				8A51EA6528F839CB00970A37 /* MessageLabel.swift in Sources */,
 				8A51EA6328F8378900970A37 /* Utilities.swift in Sources */,
@@ -276,7 +277,7 @@
 /* Begin PBXTargetDependency section */
 		8A51EA5F28F6DF1300970A37 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = "spotlight::Spotlight" /* Spotlight */;
+			target = "spotlight::Spotlight" /* Yokoso */;
 			targetProxy = 8A51EA5E28F6DF1300970A37 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -452,14 +453,14 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Spotlight.xcodeproj/Spotlight_Info.plist;
+				INFOPLIST_FILE = Sources/Yokoso_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Spotlight;
+				PRODUCT_BUNDLE_IDENTIFIER = Yokoso;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -469,7 +470,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TARGET_NAME = Spotlight;
+				TARGET_NAME = Yokoso;
 				TVOS_DEPLOYMENT_TARGET = 11.0;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -486,14 +487,14 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Spotlight.xcodeproj/Spotlight_Info.plist;
+				INFOPLIST_FILE = Sources/Yokoso_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Spotlight;
+				PRODUCT_BUNDLE_IDENTIFIER = Yokoso;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -503,7 +504,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TARGET_NAME = Spotlight;
+				TARGET_NAME = Yokoso;
 				TVOS_DEPLOYMENT_TARGET = 11.0;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -604,7 +605,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_17 /* Build configuration list for PBXNativeTarget "Spotlight" */ = {
+		OBJ_17 /* Build configuration list for PBXNativeTarget "Yokoso" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				OBJ_18 /* Debug */,
@@ -613,7 +614,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_2 /* Build configuration list for PBXProject "Spotlight" */ = {
+		OBJ_2 /* Build configuration list for PBXProject "Yokoso" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				OBJ_3 /* Debug */,
