@@ -35,6 +35,8 @@ public final class InstructionManager {
             UIView.animate(withDuration: 0.3) {
                 oldValue?.alpha = 0
                 overlay.alpha = 1
+            } completion: { _ in
+                oldValue?.removeFromSuperview()
             }
         }
     }
