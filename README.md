@@ -25,18 +25,18 @@ import Yokoso
 initialize `InstructionManager`,
 
 ```swift
-    let manager = InstructionManager(overlayBackgroundColor: .overlayBackground)
+let manager = InstructionManager(overlayBackgroundColor: .overlayBackground)
 ```
 
 then use `InstructionManager`'s interface to show or close your `Instruction`.
 
 ```swift
-    /// - throws: `InstructionError.interestedViewOutOfBounds`
-    public func show(
-        _ instruction: Instruction,
-        in view: UIView,
-        onFinish: @escaping (Bool) -> ()
-    ) throws
+/// - throws: `InstructionError.interestedViewOutOfBounds`
+public func show(
+    _ instruction: Instruction,
+    in view: UIView,
+    onFinish: @escaping (Bool) -> ()
+) throws
 ```
 
 ### Showing single Instruction
@@ -46,38 +46,38 @@ So make sure you know `isShowingInstruction` state to avoid calling `show()` mul
 It's safe to invoke `show` while showing, but it would trigger overlay's fade animation again.
 
 ```swift
-        if isShowingInstruction { return }
+if isShowingInstruction { return }
 
-        isShowingInstruction = true
+isShowingInstruction = true
 
-        do {
+do {
 
-            try instructionManager.show(
-                .init(
-                    message: .init(
-                        attributedString: attributedString,
-                        backgroundColor: uicolor
-                    ),
-                    nextButton: .simple("Next"),
-                    sourceView: label
-                ),
-                in: view
-            ) { [weak self] success in
-                guard let me = self else { return }
+    try instructionManager.show(
+        .init(
+            message: .init(
+                attributedString: attributedString,
+                backgroundColor: uicolor
+            ),
+            nextButton: .simple("Next"),
+            sourceView: label
+        ),
+        in: view
+    ) { [weak self] success in
+        guard let me = self else { return }
 
-                // called when instruction "did" finish
+        // called when instruction "did" finish
 
-                me.isShowingInstruction = false
-            }
+        me.isShowingInstruction = false
+    }
 
-        } catch {
+} catch {
 
-            isShowingInstruction = false
+    isShowingInstruction = false
 
-            if let error = error as? InstructionError {
-                showError(error)
-            }
-        }
+    if let error = error as? InstructionError {
+        showError(error)
+    }
+}
 ```
 
 ### Showing multiple Instructions
@@ -87,24 +87,24 @@ If you want to show multiple instructions in order, then call `show()` in order.
 This way you have more control over the timings, comparing to passing multiple `Instruction` at once.
 
 ```swift
-    private func startI1() {
-        show(
-            .init(
-                message: .init(attributedString: makeMessage("Hi with simple Next button. Tap anywhere to continue."), backgroundColor: .background),
-                nextButton: .simple("Next"),
-                sourceView: label1
-            )
-        ) { [weak self] success in
+private func startI1() {
+    show(
+        .init(
+            message: .init(attributedString: makeMessage("Hi with simple Next button. Tap anywhere to continue."), backgroundColor: .background),
+            nextButton: .simple("Next"),
+            sourceView: label1
+        )
+    ) { [weak self] success in
 
-            self?.startI2() // NOTE: Starting next instruction.
+        self?.startI2() // NOTE: Starting next instruction.
 
-        }
     }
+}
 
-    private func startI2() {
-        show(
-            .init(
-            ...
+private func startI2() {
+    show(
+        .init(
+        ...
 ```
 
 Please refer to example app inside repository for further customization.
