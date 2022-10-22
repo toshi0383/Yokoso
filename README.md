@@ -30,6 +30,15 @@ initialize `InstructionManager`,
 
 then use `InstructionManager`'s interface to show or close your `Instruction`.
 
+```swift
+    /// - throws: `InstructionError.interestedViewOutOfBounds`
+    public func show(
+        _ instruction: Instruction,
+        in view: UIView,
+        onFinish: @escaping (Bool) -> ()
+    ) throws
+```
+
 ### Showing single Instruction
 
 To simplify internal implementation, we don't check view state internally, but just redrawing everything again.
