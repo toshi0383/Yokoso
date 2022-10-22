@@ -1,4 +1,4 @@
-# Yokoso
+# 🌸Yokoso🗻
 
 Yet another super simple spotlight instruction framework for UIKit iOS.
 
