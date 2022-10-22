@@ -11,6 +11,8 @@ Simple spotlight instruction framework for UIKit iOS.
 
 ## Screenshot
 
+https://user-images.githubusercontent.com/6007952/197309254-e7a0ed85-89c0-4d5a-a022-6e02c1fadb3b.mp4
+
 ## Sample
 
 Please refer to example app inside repository.
