@@ -112,8 +112,6 @@ Please refer to example app inside repository for further customization.
 ## Install
 
 - [x] Swift Package Manager
-- [ ] CocoaPods
-- [ ] Carthage
 
 ## Contributing
 
