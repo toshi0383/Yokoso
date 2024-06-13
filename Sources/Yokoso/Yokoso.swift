@@ -61,8 +61,17 @@ public final class InstructionManager {
 
         guard let window else { return }
 
-        guard let sourceViewFrameInWindow = instruction.sourceView.superview?.convert(instruction.sourceView.frame, to: window) else {
+        guard var sourceViewFrameInWindow = instruction.sourceView.superview?.convert(instruction.sourceView.frame, to: window) else {
             return
+        }
+
+        if let sourceRect = instruction.sourceRect {
+            sourceViewFrameInWindow = CGRect(
+                x: sourceViewFrameInWindow.minX + sourceRect.minX,
+                y: sourceViewFrameInWindow.minY + sourceRect.minY,
+                width: sourceRect.size.width,
+                height: sourceRect.size.height
+            )
         }
 
         if sourceViewFrameInWindow.minX < 0

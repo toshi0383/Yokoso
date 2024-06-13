@@ -10,12 +10,13 @@ final class ViewController: UIViewController {
     private let label1 = UIButton()
     private let label2 = UIButton()
     private let label3 = UIButton()
+    private let label4 = UIButton()
 
     private let vStack: UIStackView = {
         let vStack = UIStackView()
         vStack.axis = .vertical
         vStack.distribution = .fill
-        vStack.alignment = .fill
+        vStack.alignment = .leading
         vStack.spacing = 0
         return vStack
     }()
@@ -99,6 +100,19 @@ final class ViewController: UIViewController {
         }
     }
 
+    private func startI4() {
+        show(
+            .init(
+                message: .init(attributedString: makeMessage("Highlight area is customizable by sourceRect.🍣"), backgroundColor: .background),
+                nextButton: .custom(makeNextButtonView()),
+                sourceView: label4,
+                sourceRect: CGRect(x: 0, y: 0, width: 100, height: 100)
+            )
+        ) { success in
+            print("finish 4 \(success)")
+        }
+    }
+
     // MARK: Custom Message and NextButton
 
     private func makeMessage(_ value: String) -> NSAttributedString {
@@ -176,14 +190,28 @@ final class ViewController: UIViewController {
             label3.addTarget(self, action: #selector(tap3), for: .touchUpInside)
         }
 
+        do {
+            label4.setTitleColor(.systemRed, for: .normal)
+            label4.setTitle("sourceRect", for: .normal)
+            label4.backgroundColor = .systemGreen
+            label4.addTarget(self, action: #selector(tap4), for: .touchUpInside)
+        }
+
+
         [label1, label2, label3].forEach {
             $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
             $0.heightAnchor.constraint(equalToConstant: 100).isActive = true
             $0.translatesAutoresizingMaskIntoConstraints = false
             vStack.addArrangedSubview($0)
         }
+        [label4].forEach {
+            $0.widthAnchor.constraint(equalToConstant: 200).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            vStack.addArrangedSubview($0)
+        }
 
-        vStack.frame = CGRect(origin: originalVStackPoint, size: CGSize(width: 100, height: 300))
+        vStack.frame = CGRect(origin: originalVStackPoint, size: CGSize(width: 200, height: 400))
         vStack.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         view.addSubview(vStack)
     }
@@ -219,6 +247,13 @@ final class ViewController: UIViewController {
         print(#function)
         if !isShowingInstruction {
             startI3()
+        }
+    }
+
+    @objc private func tap4() {
+        print(#function)
+        if !isShowingInstruction {
+            startI4()
         }
     }
 
