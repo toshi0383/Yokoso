@@ -3,6 +3,7 @@ import UIKit
 /// Supporting device rotation.
 let overlayOuterMargin: CGFloat = 500
 
+@MainActor
 public final class InstructionManager {
 
     private weak var window: UIWindow?
@@ -43,6 +44,18 @@ public final class InstructionManager {
 
     public init(overlayBackgroundColor: UIColor = .black.withAlphaComponent(0.4)) {
         self.overlayBackgroundColor = overlayBackgroundColor
+    }
+
+    public func show(_ instruction: Instruction, in view: UIView) async throws {
+        _ = try await withCheckedThrowingContinuation { c in
+            do {
+                try self.show(instruction, in: view, onFinish: { isSuccessful in
+                    c.resume(returning: isSuccessful)
+                })
+            } catch {
+                c.resume(throwing: error)
+            }
+        }
     }
 
     /// - throws: `InstructionError.interestedViewOutOfBounds`

@@ -40,25 +40,19 @@ final class ViewController: UIViewController {
     private func _show(_ instruction: Instruction, onFinish: ((Bool) -> ())? = nil) {
         isShowingInstruction = true
 
-        do {
+        Task {
+            do {
+                try await manager.show(
+                    instruction,
+                    in: view
+                )
+            } catch {
 
-            try manager.show(
-                instruction,
-                in: view
-            ) { [weak self] success in
-                guard let me = self else { return }
-
-                // called when instruction "did" finish
-
-                me.isShowingInstruction = false
+                if let error = error as? InstructionError {
+                    showError(error)
+                }
             }
-
-        } catch {
             isShowingInstruction = false
-
-            if let error = error as? InstructionError {
-                showError(error)
-            }
         }
     }
 
