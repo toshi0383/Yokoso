@@ -105,11 +105,6 @@ public final class InstructionManager {
         let messageLabel = MessageLabel(instruction)
 
         if !instruction.blocksTapOutsideCutoutPath {
-
-            if instruction.nextButton != nil {
-                overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
-            }
-
             overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
         }
         messageLabel.onTapNext = { [weak self] in self?.close() }
