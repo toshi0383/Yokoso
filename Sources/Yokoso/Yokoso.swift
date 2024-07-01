@@ -108,13 +108,17 @@ public final class InstructionManager {
 
             if instruction.nextButton != nil {
                 overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
-                messageLabel.onTapNext = { [weak self] in self?.close() }
             }
 
             overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
         }
+        messageLabel.onTapNext = { [weak self] in self?.close() }
 
-        overlay.onHitInsideCutoutPath = { [weak self] in self?.close() }
+        overlay.onHitInsideCutoutPath = { [weak self] in
+            if !instruction.ignoresTapInsideCutoutPath {
+                self?.close()
+            }
+        }
 
         overlay.onWidthChanged = { [weak self] in
 

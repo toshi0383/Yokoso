@@ -28,6 +28,7 @@ public struct Instruction {
     let sourceView: UIView
     let sourceRect: CGRect?
     let blocksTapOutsideCutoutPath: Bool
+    let ignoresTapInsideCutoutPath: Bool
 
     /// - parameter message: message struct value
     /// - parameter nextButton: NextButton enum value. Default: nil
@@ -38,13 +39,11 @@ public struct Instruction {
         nextButton: NextButton? = nil,
         sourceView: UIView,
         sourceRect: CGRect? = nil,
-        blocksTapOutsideCutoutPath: Bool = false
+        blocksTapOutsideCutoutPath: Bool = false,
+        ignoresTapInsideCutoutPath: Bool = false
     ) {
-        if case .simple = nextButton, blocksTapOutsideCutoutPath {
-            preconditionFailure("blocksTapOutsideCutoutPath must be false with simple NextButton.")
-        }
-
         self.blocksTapOutsideCutoutPath = blocksTapOutsideCutoutPath
+        self.ignoresTapInsideCutoutPath = ignoresTapInsideCutoutPath
         self.message = message
         self.nextButton = nextButton
         self.sourceView = sourceView

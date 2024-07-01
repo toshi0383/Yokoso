@@ -78,9 +78,11 @@ final class ViewController: UIViewController {
     private func startI2() {
         show(
             .init(
-                message: .init(attributedString: makeMessage("You have to tap here to continue.\nTap again to restart these instructions."), backgroundColor: .background),
+                message: .init(attributedString: makeMessage("You have to tap \"Next\" to continue.\nTap again to restart these instructions."), backgroundColor: .background),
+                nextButton: .simple("Next"),
                 sourceView: label2,
-                blocksTapOutsideCutoutPath: true
+                blocksTapOutsideCutoutPath: true,
+                ignoresTapInsideCutoutPath: true
             )
         ) { [weak self] success in
             print("finish 2 \(success)")
