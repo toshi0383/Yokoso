@@ -46,8 +46,8 @@ public final class InstructionManager {
         self.overlayBackgroundColor = overlayBackgroundColor
     }
 
-    public func show(_ instruction: Instruction, in view: UIView) async throws {
-        _ = try await withCheckedThrowingContinuation { c in
+    public func show(_ instruction: Instruction, in view: UIView) async throws -> Bool {
+        try await withCheckedThrowingContinuation { c in
             do {
                 try self.show(instruction, in: view, onFinish: { isSuccessful in
                     c.resume(returning: isSuccessful)
