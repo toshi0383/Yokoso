@@ -46,11 +46,15 @@ public final class InstructionManager {
         self.overlayBackgroundColor = overlayBackgroundColor
     }
 
-    public func show(_ instruction: Instruction, in view: UIView) async throws -> Bool {
+    public func show(_ instruction: Instruction, in view: UIView) async throws {
         try await withCheckedThrowingContinuation { c in
             do {
                 try self.show(instruction, in: view, onFinish: { isSuccessful in
-                    c.resume(returning: isSuccessful)
+                    if isSuccessful {
+                        c.resume()
+                    } else {
+                        c.resume(throwing: InstructionError.interestedViewOutOfBounds)
+                    }
                 })
             } catch {
                 c.resume(throwing: error)
@@ -210,7 +214,6 @@ public final class InstructionManager {
             guard let me = self else { return }
 
             me.isClosing = false
-
             me.onFinish?(!unexpectedly)
         }
 
