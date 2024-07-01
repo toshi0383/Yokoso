@@ -4,15 +4,17 @@ Yet another super simple spotlight instruction framework for UIKit iOS.
 
 ## Why Yokoso?
 
-- [x] Supports device rotation / iPad SplitView
-- [x] Closure style callback (no complex datasources or delegates)
 - [x] Checks if interested view is inside window's bounds
+- [x] Supports device rotation / iPad SplitView
 - [x] Swift Concurrency
 - [ ] Swift 6 Concurrency Check Mode ( work in progress )
 
-## Requirements
+## Unique Error Feature
 
-- iOS 14+
+You don't want to show spotlight on an invisible view, right?
+One good thing about Yokoso, is that it checks if the interested view is fully visible to your user.
+Otherwise `InstructionError.interestedViewOutOfBounds` is thrown.
+With Yokoso, your tutorial UI/UX is better than ever.
 
 ## Screenshot
 
@@ -34,14 +36,6 @@ let manager = InstructionManager(overlayBackgroundColor: .overlayBackground)
 ```
 
 then use `InstructionManager`'s interface to show or close your `Instruction`.
-
-```swift
-/// - throws: `InstructionError.interestedViewOutOfBounds`
-public func show(
-    _ instruction: Instruction,
-    in view: UIView,
-) async throws
-```
 
 ### Showing single Instruction
 
@@ -109,6 +103,10 @@ Then pass that frame to `sourceRect` parameter of `InstructionManager.show`.
         in: view
     )
 ```
+
+## Requirements
+
+- iOS 14+
 
 ## Install
 
