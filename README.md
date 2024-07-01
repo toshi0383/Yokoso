@@ -7,7 +7,12 @@ Yet another super simple spotlight instruction framework for UIKit iOS.
 - [x] Supports device rotation / iPad SplitView
 - [x] Closure style callback (no complex datasources or delegates)
 - [x] Checks if interested view is inside window's bounds
-- [x] Stateless ( manage by yourself )
+- [x] Swift Concurrency
+- [ ] Swift 6 Concurrency Check Mode ( work in progress )
+
+## Requirements
+
+- iOS 14+
 
 ## Screenshot
 
@@ -35,21 +40,12 @@ then use `InstructionManager`'s interface to show or close your `Instruction`.
 public func show(
     _ instruction: Instruction,
     in view: UIView,
-    onFinish: @escaping (Bool) -> ()
-) throws
+) async throws
 ```
 
 ### Showing single Instruction
 
-To simplify internal implementation, we don't check view state internally, but just redrawing everything again.
-So make sure you know `isShowingInstruction` state to avoid calling `show()` multiple time.
-It's safe to invoke `show` while showing, but it would trigger overlay's fade animation again.
-
 ```swift
-if isShowingInstruction { return }
-
-isShowingInstruction = true
-
 do {
 
     try instructionManager.show(
@@ -62,52 +58,57 @@ do {
             sourceView: label
         ),
         in: view
-    ) { [weak self] success in
-        guard let me = self else { return }
-
-        // called when instruction "did" finish
-
-        me.isShowingInstruction = false
-    }
+    )
 
 } catch {
-
-    isShowingInstruction = false
-
     if let error = error as? InstructionError {
-        showError(error)
+        assertionFailure(error.localizedDescription)
     }
 }
 ```
 
-### Showing multiple Instructions
+Please refer to the Example app for further customization.
 
-Yokoso is stateless.
-If you want to show multiple instructions in order, then call `show()` in order.
-This way you have more control over the timings, comparing to passing multiple `Instruction` at once.
+## SwiftUI
+
+You can use Yokoso for SwiftUI view, at least if you're embedding with `UIHostingController`.
+
+First you need to retrieve interested view's frame via `ObservableObject` + `GeometryReader`.
 
 ```swift
-private func startI1() {
-    show(
-        .init(
-            message: .init(attributedString: makeMessage("Hi with simple Next button. Tap anywhere to continue."), backgroundColor: .background),
-            nextButton: .simple("Next"),
-            sourceView: label1
-        )
-    ) { [weak self] success in
-
-        self?.startI2() // NOTE: Starting next instruction.
-
-    }
+class ViewModel: ObservableObject {
+    @Published var interestedViewRect: CGRect?
 }
 
-private func startI2() {
-    show(
-        .init(
-        ...
+struct YourView: View {
+    @ObservedObject var viewModel: ViewModel
+    var body: some View {
+        GeometryReader { p in
+            yourLayout
+                .onAppear {
+                    viewModel.interestedViewRect = p.frame(in: .global)
+                }
+        }
+    }
+
+}
 ```
 
-Please refer to example app inside repository for further customization.
+Then pass that frame to `sourceRect` parameter of `InstructionManager.show`.
+
+```swift
+    try await instructionManager?.show(
+        .init(
+            message: .init(attributedString: message, backgroundColor: .v4.monotone8),
+            nextButton: .custom(...),
+            sourceView: view,
+            sourceRect: sourceRect,
+            blocksTapOutsideCutoutPath: true,
+            ignoresTapInsideCutoutPath: true
+        ),
+        in: view
+    )
+```
 
 ## Install
 
