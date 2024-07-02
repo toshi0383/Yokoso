@@ -11,6 +11,7 @@ public final class InstructionManager {
 
     public var isStarted: Bool { window != nil }
     private let overlayBackgroundColor: UIColor
+    private var instruction: Instruction?
 
     private var overlay: OverlayView? {
         didSet {
@@ -82,6 +83,8 @@ public final class InstructionManager {
             return
         }
 
+            self.instruction = instruction
+
         if let sourceRect = instruction.sourceRect {
             sourceViewFrameInWindow = CGRect(
                 x: sourceViewFrameInWindow.minX + sourceRect.minX,
@@ -118,11 +121,12 @@ public final class InstructionManager {
         )
 
         overlay.cutoutPath = expanded
+        overlay.blocksTapInsideCutoutPath = instruction.blocksTapInsideCutoutPath
 
         let messageLabel = MessageLabel(instruction)
 
-        if !instruction.blocksTapOutsideCutoutPath {
-            overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
+        if !instruction.blocksTapOutsideCutoutPath || !instruction.blocksTapInsideCutoutPath {
+            overlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapOverlay)))
         }
         messageLabel.onTapNext = { [weak self] in self?.close() }
 
@@ -198,6 +202,20 @@ public final class InstructionManager {
         NSLayoutConstraint.activate(arrowConstraints)
     }
 
+    @objc private func onTapOverlay(_ gesture: UITapGestureRecognizer) {
+        guard let instruction else { return }
+        let isTapInsideCutoutPath = overlay?.cutoutPath?.contains(gesture.location(in: overlay)) == true
+        if (instruction.blocksTapInsideCutoutPath || instruction.ignoresTapInsideCutoutPath), isTapInsideCutoutPath {
+            return
+        }
+
+        if instruction.blocksTapOutsideCutoutPath, !isTapInsideCutoutPath {
+            return
+        }
+
+        close()
+    }
+
     private var isClosing = false
 
     @objc public func close(unexpectedly: Bool = false) {
@@ -218,6 +236,7 @@ public final class InstructionManager {
         }
 
         window = nil
+        instruction = nil
 
         dismissOverlayAnimated()
     }

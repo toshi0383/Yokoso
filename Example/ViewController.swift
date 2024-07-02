@@ -11,6 +11,7 @@ final class ViewController: UIViewController {
     private let label2 = UIButton()
     private let label3 = UIButton()
     private let label4 = UIButton()
+    private let label5 = UIButton()
 
     private let vStack: UIStackView = {
         let vStack = UIStackView()
@@ -102,10 +103,27 @@ final class ViewController: UIViewController {
                 message: .init(attributedString: makeMessage("Highlight area is customizable by sourceRect.🍣"), backgroundColor: .background),
                 nextButton: .custom(makeNextButtonView()),
                 sourceView: label4,
-                sourceRect: CGRect(x: 0, y: 0, width: 100, height: 100)
+                sourceRect: CGRect(x: 0, y: 0, width: 100, height: 100),
+                blocksTapOutsideCutoutPath: true,
+                blocksTapInsideCutoutPath: true
             )
         ) { success in
             print("finish 4 \(success)")
+        }
+    }
+
+    private func startI5() {
+        show(
+            .init(
+                message: .init(attributedString: makeMessage("Test 5"), backgroundColor: .background),
+                nextButton: .simple("Next"),
+                sourceView: label5,
+                sourceRect: CGRect(x: 0, y: 0, width: 100, height: 50),
+                blocksTapOutsideCutoutPath: true,
+                blocksTapInsideCutoutPath: true
+            )
+        ) { success in
+            print("finish 5 \(success)")
         }
     }
 
@@ -193,6 +211,12 @@ final class ViewController: UIViewController {
             label4.addTarget(self, action: #selector(tap4), for: .touchUpInside)
         }
 
+        do {
+            label5.setTitleColor(.systemRed, for: .normal)
+            label5.setTitle("sourceRect", for: .normal)
+            label5.backgroundColor = .systemGreen
+            label5.addTarget(self, action: #selector(tap5), for: .touchUpInside)
+        }
 
         [label1, label2, label3].forEach {
             $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -206,8 +230,14 @@ final class ViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             vStack.addArrangedSubview($0)
         }
+        [label5].forEach {
+            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            vStack.addArrangedSubview($0)
+        }
 
-        vStack.frame = CGRect(origin: originalVStackPoint, size: CGSize(width: 200, height: 400))
+        vStack.frame = CGRect(origin: originalVStackPoint, size: CGSize(width: 200, height: 450))
         vStack.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         view.addSubview(vStack)
     }
@@ -250,6 +280,13 @@ final class ViewController: UIViewController {
         print(#function)
         if !isShowingInstruction {
             startI4()
+        }
+    }
+
+    @objc private func tap5() {
+        print(#function)
+        if !isShowingInstruction {
+            startI5()
         }
     }
 

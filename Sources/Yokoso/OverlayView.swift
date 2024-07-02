@@ -8,6 +8,8 @@ final class OverlayView: UIView {
         }
     }
 
+    var blocksTapInsideCutoutPath: Bool = false
+
     var onWidthChanged: (() -> ())?
     var onHitInsideCutoutPath: (() -> ())?
     private var preWidth: CGFloat?
@@ -34,8 +36,10 @@ final class OverlayView: UIView {
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if let cutoutPath, cutoutPath.contains(point) {
-            onHitInsideCutoutPath?()
-            return nil
+            if !blocksTapInsideCutoutPath {
+                onHitInsideCutoutPath?()
+                return nil
+            }
         }
 
         return super.hitTest(point, with: event)

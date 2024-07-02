@@ -28,6 +28,7 @@ public struct Instruction {
     let sourceView: UIView
     let sourceRect: CGRect?
     let blocksTapOutsideCutoutPath: Bool
+    let blocksTapInsideCutoutPath: Bool
     let ignoresTapInsideCutoutPath: Bool
 
     /// - parameter message: message struct value
@@ -40,9 +41,11 @@ public struct Instruction {
         sourceView: UIView,
         sourceRect: CGRect? = nil,
         blocksTapOutsideCutoutPath: Bool = false,
+        blocksTapInsideCutoutPath: Bool = false,
         ignoresTapInsideCutoutPath: Bool = false
     ) {
         self.blocksTapOutsideCutoutPath = blocksTapOutsideCutoutPath
+        self.blocksTapInsideCutoutPath = blocksTapInsideCutoutPath
         self.ignoresTapInsideCutoutPath = ignoresTapInsideCutoutPath
         self.message = message
         self.nextButton = nextButton
