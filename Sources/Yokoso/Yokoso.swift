@@ -42,6 +42,7 @@ public final class InstructionManager {
         }
     }
 
+    nonisolated
     public init(overlayBackgroundColor: UIColor = .black.withAlphaComponent(0.4)) {
         self.overlayBackgroundColor = overlayBackgroundColor
     }

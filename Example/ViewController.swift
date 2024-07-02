@@ -268,3 +268,15 @@ final class ViewController: UIViewController {
         present(alert, animated: true)
     }
 }
+
+protocol InstructionManagerType: AnyObject {
+}
+
+extension InstructionManager: InstructionManagerType {}
+
+@MainActor
+final class MyViewModel: ObservableObject {
+    // NOTE: Can be used as default argument of init, in case of dependency injection like this.
+    init(manager: InstructionManagerType = InstructionManager()) {
+    }
+}
