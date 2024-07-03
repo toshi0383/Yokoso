@@ -27,6 +27,7 @@ public struct Instruction {
     let nextButton: NextButton?
     let sourceView: UIView
     let sourceRect: CGRect?
+    let cutoutPathExpansion: UIEdgeInsets
     let blocksTapOutsideCutoutPath: Bool
     let blocksTapInsideCutoutPath: Bool
     let ignoresTapInsideCutoutPath: Bool
@@ -40,6 +41,7 @@ public struct Instruction {
         nextButton: NextButton? = nil,
         sourceView: UIView,
         sourceRect: CGRect? = nil,
+        cutoutPathExpansion: UIEdgeInsets = .zero,
         blocksTapOutsideCutoutPath: Bool = false,
         blocksTapInsideCutoutPath: Bool = false,
         ignoresTapInsideCutoutPath: Bool = false
@@ -51,5 +53,6 @@ public struct Instruction {
         self.nextButton = nextButton
         self.sourceView = sourceView
         self.sourceRect = sourceRect
+        self.cutoutPathExpansion = cutoutPathExpansion
     }
 }

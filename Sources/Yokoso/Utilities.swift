@@ -73,3 +73,14 @@ extension UIView {
     }
 
 }
+
+extension CGRect {
+    mutating func expand(_ edgeInsets: UIEdgeInsets) {
+        self = CGRect(
+            x: minX - edgeInsets.left,
+            y: minY - edgeInsets.top,
+            width: width + edgeInsets.left + edgeInsets.right,
+            height: height + edgeInsets.top + edgeInsets.bottom
+        )
+    }
+}

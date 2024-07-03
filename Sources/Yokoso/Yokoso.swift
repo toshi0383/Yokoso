@@ -94,6 +94,8 @@ public final class InstructionManager {
             )
         }
 
+        sourceViewFrameInWindow.expand(instruction.cutoutPathExpansion)
+
         if sourceViewFrameInWindow.minX < 0
             || sourceViewFrameInWindow.minY < 0
             || sourceViewFrameInWindow.maxY > window.bounds.height
@@ -108,15 +110,15 @@ public final class InstructionManager {
 
         let sourceViewX = sourceViewFrameInWindow.minX + overlayOuterMargin
         let sourceViewY = sourceViewFrameInWindow.minY + overlayOuterMargin
-        let cutoutX = sourceViewX - 4
-        let cutoutY = sourceViewY - 4
+        let cutoutX = sourceViewX
+        let cutoutY = sourceViewY
         let cutoutCenterX = cutoutX + sourceViewFrameInWindow.width / 2
-        let cutoutHeight = sourceViewFrameInWindow.height + 8
+        let cutoutHeight = sourceViewFrameInWindow.height
 
         let expanded = CGRect(
             x: cutoutX,
             y: cutoutY,
-            width: sourceViewFrameInWindow.width + 8,
+            width: sourceViewFrameInWindow.width,
             height: cutoutHeight
         )
 
