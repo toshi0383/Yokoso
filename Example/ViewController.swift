@@ -63,7 +63,8 @@ final class ViewController: UIViewController {
                 message: .init(attributedString: makeMessage("Hi with simple Next button. Tap anywhere to continue."), backgroundColor: .background),
                 nextButton: .simple("Next"),
                 sourceView: label1,
-                cutoutPathExpansion: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+                cutoutPathExpansion: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
+                cutoutCornerRadius: 10
             )
         ) { [weak self] success in
             print("finish 1 \(success)")

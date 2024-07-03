@@ -13,8 +13,10 @@ final class OverlayView: UIView {
     var onWidthChanged: (() -> ())?
     var onHitInsideCutoutPath: (() -> ())?
     private var preWidth: CGFloat?
+    private let cutoutCornerRadius: CGFloat
 
-    init(backgroundColor: UIColor) {
+    init(backgroundColor: UIColor, cutoutCornerRadius: CGFloat) {
+        self.cutoutCornerRadius = cutoutCornerRadius
         super.init(frame: .zero)
 
         self.backgroundColor = backgroundColor
@@ -48,7 +50,7 @@ final class OverlayView: UIView {
     private func reloadLayers() {
         guard let cutoutPath else { return }
 
-        let path = UIBezierPath(roundedRect: cutoutPath, cornerRadius: 5)
+        let path = UIBezierPath(roundedRect: cutoutPath, cornerRadius: cutoutCornerRadius)
         path.append(UIBezierPath(rect: bounds))
 
         let maskLayer = CAShapeLayer()

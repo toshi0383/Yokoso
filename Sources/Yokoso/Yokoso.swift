@@ -105,7 +105,10 @@ public final class InstructionManager {
             throw InstructionError.interestedViewOutOfBounds
         }
 
-        let overlay = OverlayView(backgroundColor: overlayBackgroundColor)
+        let overlay = OverlayView(
+            backgroundColor: overlayBackgroundColor,
+            cutoutCornerRadius: instruction.cutoutCornerRadius
+        )
         self.overlay = overlay
 
         let sourceViewX = sourceViewFrameInWindow.minX + overlayOuterMargin
